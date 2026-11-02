@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assignment
 {
@@ -19,29 +18,27 @@ namespace Assignment
             Stack<int> stack = new Stack<int>();
             stack.Push(1);
             stack.Push(2);
-            stack.Push(3);
+            stack.Push(3); //top
 
             int count = stack.Count;
-            Debug.Log($"count: {count}");
-            int popped = stack.Pop();
-            Debug.Log($"pop: {popped}");
-            int peek = stack.Peek();
-            int countAfterPeek = stack.Count;
+            int poped = stack.Pop();//poped = 3
+            int peek = stack.Peek();//peek = 2
+            int countAftrePeek = stack.Count; //countAftrePeek = 2
 
-            return (count, popped, peek, countAfterPeek);
+            return (count, poped, peek, countAftrePeek);
         }
 
         public (int Count, int Dequeued, int Peek, int CountAfterPeek) LCT02_QueueSyntax()
         {
             Queue<int> queue = new Queue<int>();
-            queue.Enqueue(1);
+            queue.Enqueue(1); // head
             queue.Enqueue(2);
             queue.Enqueue(3);
 
-            int count = queue.Count;
-            int dequeued = queue.Dequeue();
-            int peek = queue.Peek();
-            int countAfterPeek = queue.Count;
+            int count = queue.Count; // 3
+            int dequeued = queue.Dequeue(); // dequeued = 1
+            int peek = queue.Peek(); // peek = 2
+            int countAfterPeek = queue.Count; // countAfterPeek = 2
 
             return (count, dequeued, peek, countAfterPeek);
         }
@@ -52,20 +49,21 @@ namespace Assignment
             Action action2 = new Action { Name = "Action 2" };
             Action action3 = new Action { Name = "Action 3" };
 
-            Stack<Action> undoStack = new Stack<Action>();
-            undoStack.Push(action1);
-            undoStack.Push(action2);
-            undoStack.Push(action3);
+            Stack<Action> stack = new Stack<Action>();
+            stack.Push(action1);
+            stack.Push(action2);
+            stack.Push(action3);
 
-            int c = undoStack.Count;
-            string[] history = new string[c];
+            int c = stack.Count;
+            List<string> actions = new List<string>();
             for (int i = 0; i < c; i++)
             {
-                var popped = undoStack.Pop();
-                history[i] = popped.Name;
+                var action = stack.Pop();
+                actions.Add(action.Name);
             }
 
-            return history;
+            // actions => action3, action2, action1
+            return actions.ToArray();
         }
 
         public string[] LCT04_ActionQueue()
@@ -74,20 +72,19 @@ namespace Assignment
             Action action2 = new Action { Name = "Action 2" };
             Action action3 = new Action { Name = "Action 3" };
 
-            Queue<Action> queue = new Queue<Action>();
+            Queue<Action> queue = new();
             queue.Enqueue(action1);
             queue.Enqueue(action2);
             queue.Enqueue(action3);
 
             int c = queue.Count;
-            string[] actionList = new string[c];
+            List<string> actions = new List<string>();
             for (int i = 0; i < c; i++)
             {
-                var dequeued = queue.Dequeue();
-                actionList[i] = dequeued.Name;
+                var a = queue.Dequeue();
+                actions.Add(a.Name);
             }
-
-            return actionList;
+            return actions.ToArray();
         }
 
         #endregion
@@ -96,12 +93,38 @@ namespace Assignment
 
         public string ASN01_ReverseString(string str)
         {
-            throw new NotImplementedException();
+            Stack<char> charStack = new Stack<char>();
+
+            foreach (var letter in str)
+            {
+                charStack.Push(letter);
+            }
+
+            List<char> reversedChars = new List<char>();
+
+            while (charStack.Count != 0)
+            {
+                reversedChars.Add(charStack.Pop());
+            }
+
+            return new string(reversedChars.ToArray());
         }
 
         public bool ASN02_StackPalindrome(string str)
         {
-            throw new NotImplementedException();
+            Stack<char> stack = new();
+            foreach (char c in str)
+            {
+                stack.Push(c);
+            }
+
+            string reverseString = "";
+            while (stack.Count > 0)
+            {
+                reverseString += stack.Pop();
+            }
+
+            return str == reverseString;
         }
 
         #endregion
